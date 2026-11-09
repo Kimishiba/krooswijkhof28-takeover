@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Takeover List - Krooswijkhof 28 Amsterdam</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 6mm 7mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #FFFFFF;
+      color: #000000;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Neo-Brutalist utility classes */
+    .border-thick {
+      border: 2.5px solid #000000;
+    }
+
+    .border-thin {
+      border: 1.5px solid #000000;
+    }
+
+    .shadow-hard {
+      box-shadow: 3.5px 3.5px 0px #000000;
+    }
+
+    .shadow-hard-sm {
+      box-shadow: 2px 2px 0px #000000;
+    }
+
+    .bg-yellow {
+      background-color: #FFE600;
+    }
+
+    .bg-black {
+      background-color: #000000;
+      color: #FFFFFF;
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      margin-bottom: 6px;
+    }
+
+    .header-main {
+      flex: 1;
+      padding: 6px 10px;
+      background-color: #FFE600;
+    }
+
+    .header-badge {
+      padding: 6px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    /* Section Banner */
+    .section-title {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 2px 6px;
+      margin-top: 4px;
+      margin-bottom: 2.5px;
+      display: inline-block;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2.5px;
+      font-size: 8.5px;
+    }
+
+    th {
+      background-color: #000000;
+      color: #FFFFFF;
+      text-align: left;
+      padding: 2.5px 4.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border: 1.2px solid #000000;
+    }
+
+    th.text-right, td.text-right {
+      text-align: right;
+    }
+
+    td {
+      padding: 2px 4.5px;
+      border: 1.2px solid #000000;
+      vertical-align: middle;
+      background: #FFFFFF;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #FAFAFA;
+    }
+
+    .item-title {
+      font-weight: 700;
+      color: #000000;
+      font-size: 8.5px;
+    }
+
+    .item-desc {
+      font-size: 7.5px;
+      color: #444444;
+      line-height: 1.15;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 6.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.5px 3px;
+      border: 1px solid #000000;
+      background: #FFE600;
+      margin-right: 2.5px;
+    }
+
+    .tag-room {
+      background: #FFFFFF;
+    }
+
+    .tag-free {
+      background: #008822;
+      color: #FFFFFF;
+      border-color: #008822;
+    }
+
+    .price-original {
+      font-size: 7.5px;
+      color: #666666;
+      text-decoration: line-through;
+    }
+
+    .price-bold {
+      font-weight: 700;
+      font-size: 9px;
+    }
+
+    .price-free {
+      color: #008822;
+      font-weight: 700;
+    }
+
+    /* Highlight Banner Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      margin-bottom: 2px;
+    }
+
+    .card {
+      padding: 3.5px 6px;
+      background: #FFFFFF;
+    }
+
+    .card h3 {
+      font-size: 8.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 1px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .card p {
+      font-size: 7.5px;
+      line-height: 1.2;
+    }
+
+    /* Summary Block */
+    .summary-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 10px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      background-color: #FFE600;
+    }
+
+    .summary-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .summary-subtitle {
+      font-size: 7.5px;
+      margin-top: 1px;
+    }
+
+    .summary-amount {
+      font-size: 17px;
+      font-weight: 700;
+      background: #000000;
+      color: #FFE600;
+      padding: 3px 10px;
+      border: 2px solid #000000;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1.5px solid #000000;
+      padding-top: 3px;
+      font-size: 7.5px;
+      color: #333333;
+    }
+    @media print { .no-print { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="no-print" style="max-width: 860px; margin: 12px auto; display: flex; gap: 10px; justify-content: space-between; align-items: center; padding: 10px 14px; background: #ffffff; border: 2.5px solid #000000; box-shadow: 4px 4px 0px #000000;">
+    <a href="index.html" style="font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; padding: 6px 12px; border: 2px solid #000; background: #FFE600; color: #000;">← Interactive Selector</a>
+    <div style="display: flex; gap: 8px;">
+      <button onclick="window.print()" style="font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; padding: 6px 12px; border: 2px solid #000; background: #ffffff; cursor: pointer;">🖨️ Print Form</button>
+      <a href="takeover_list_krooswijkhof28.pdf" download style="font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; padding: 6px 12px; border: 2px solid #000; background: #000000; color: #ffffff;">📥 Download PDF</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- Header Section -->
+    <div class="header">
+      <div class="header-main border-thick shadow-hard">
+        <h1>Lijst van Zaken / Takeover List</h1>
+        <div class="subtitle mono">Krooswijkhof 28, 1083 JB Amsterdam • Verkoop &amp; Ter Overname</div>
+      </div>
+      <div class="header-badge bg-black border-thick shadow-hard">
+        <div class="mono" style="font-size: 7.5px; letter-spacing: 0.8px;">STATUS: TER OVERNAME</div>
+        <div class="mono" style="font-size: 11px; font-weight: 700; color: #FFE600;">OPTIONAL BUNDLE</div>
+      </div>
+    </div>
+
+    <!-- Quick info cards -->
+    <div class="grid-2">
+      <div class="card border-thin shadow-hard-sm">
+        <h3><span class="tag">INFO</span> Smart Lighting System</h3>
+        <p>In-line lighting uses <strong>Sonoff 433MHz RF modules</strong> with paired cordless wall switches included at module cost price (€90 total).</p>
+      </div>
+      <div class="card border-thin shadow-hard-sm">
+        <h3><span class="tag tag-free">GIFT</span> PAX Wardrobe Included Free</h3>
+        <p>Fitted 5-door IKEA PAX wardrobe system (Invoice €1,256.74) with glass drawers, organizers &amp; LED lighting included at <strong>€0.00</strong>!</p>
+      </div>
+    </div>
+
+    <!-- Table 1: Smart Home & RF Lighting -->
+    <div>
+      <div class="section-title bg-black border-thin mono">01 // Smart Lighting System</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 17%;">Room / Zone</th>
+            <th style="width: 53%;">Item &amp; Description</th>
+            <th style="width: 15%;">New / Retail</th>
+            <th style="width: 15%;" class="text-right">Takeover</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-room mono">Whole Home</span></td>
+            <td>
+              <div class="item-title">Sonoff RF Smart Lighting Package (6 Modules + 2 Wall Switches)</div>
+              <div class="item-desc">Controls Hallway (2), Kitchen, Island, Table &amp; TV lights with paired stick-on 3-gang &amp; 2-gang wireless switches (at module cost price)</div>
+            </td>
+            <td class="mono">~€135.00</td>
+            <td class="text-right mono price-bold">€90.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table 2: Furniture, Fans & Fitted Window Coverings -->
+    <div>
+      <div class="section-title bg-black border-thin mono">02 // Furniture, Fitted Fixtures &amp; Window Coverings</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 17%;">Room</th>
+            <th style="width: 53%;">Item &amp; Specifications</th>
+            <th style="width: 15%;">New / Retail</th>
+            <th style="width: 15%;" class="text-right">Takeover</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-room mono">Main Bed</span></td>
+            <td>
+              <div class="item-title">Custom IKEA PAX Wardrobe System (5-Door, 250×58×236 cm)</div>
+              <div class="item-desc">REINSVOLL grey-green + mirror door, KOMPLEMENT trays/glass drawers, LINDSHULT LED &amp; TRÅDFRI</div>
+            </td>
+            <td class="mono price-original">€1,256.74</td>
+            <td class="text-right mono price-bold price-free">€0.00 FREE</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Main Bed</span></td>
+            <td>
+              <div class="item-title">IKEA KVITSÖY Storage Bed Frame + Free Headrest (160×200 cm)</div>
+              <div class="item-desc">Gas-strut lift-up storage compartment underneath, Bomstad white faux-leather. Headrest free, mattress excluded.</div>
+            </td>
+            <td class="mono price-original">€459.00</td>
+            <td class="text-right mono price-bold">€200.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Main Bed</span></td>
+            <td>
+              <div class="item-title">Silver Ceiling Fan with Light and Remote</div>
+              <div class="item-desc">Brushed silver / nickel ceiling fan with central dome light, remote control</div>
+            </td>
+            <td class="mono price-original">€180 – €300</td>
+            <td class="text-right mono price-bold">€50.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Main Bed</span></td>
+            <td>
+              <div class="item-title">IKEA RÄCKA / HUGAD Double Curtain Rod (Silver / Zilverkleur)</div>
+              <div class="item-desc">Extendable 210–385 cm double rod set with BETYDLIG brackets &amp; finials (IKEA €36.92 − €5)</div>
+            </td>
+            <td class="mono">€36.92</td>
+            <td class="text-right mono price-bold">€32.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Main Bed</span></td>
+            <td>
+              <div class="item-title">Curtain Set: SANELA Velvet + SILVERLÖNN Vitrage (2 Pairs)</div>
+              <div class="item-desc">1pr SANELA dark blue room-darkening velvet (140×300) + 1pr SILVERLÖNN white vitrage (145×300)</div>
+            </td>
+            <td class="mono price-original">~€90.00</td>
+            <td class="text-right mono price-bold">€50.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Middle Bed</span></td>
+            <td>
+              <div class="item-title">3-Blade Solid Wood Propeller Ceiling Fan with Light</div>
+              <div class="item-desc">Contemporary carved natural wood blades, central LED light, remote control</div>
+            </td>
+            <td class="mono price-original">€180 – €280</td>
+            <td class="text-right mono price-bold">€50.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Middle Bed</span></td>
+            <td>
+              <div class="item-title">White Wooden Window Blind / Jaloezie</div>
+              <div class="item-desc">Fitted horizontal white wooden slats matching window frame</div>
+            </td>
+            <td class="mono price-original">€100 – €140</td>
+            <td class="text-right mono price-bold">€30.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Third Bed</span></td>
+            <td>
+              <div class="item-title">Rectangular Wood-Trimmed LED Ceiling Light Panel</div>
+              <div class="item-desc">Minimalist flush-mount wooden framed LED ambient ceiling lamp</div>
+            </td>
+            <td class="mono price-original">€45 – €80</td>
+            <td class="text-right mono price-bold">€20.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Third Bed</span></td>
+            <td>
+              <div class="item-title">IKEA RÄCKA / HUGAD Double Curtain Rod (Silver / Zilverkleur)</div>
+              <div class="item-desc">Extendable double curtain rod set with brackets, holders &amp; finials (IKEA €36.92 − €5)</div>
+            </td>
+            <td class="mono">€36.92</td>
+            <td class="text-right mono price-bold">€32.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Living</span></td>
+            <td>
+              <div class="item-title">3x Large White Wooden Blinds / Jaloezieën</div>
+              <div class="item-desc">50 mm wide slats, custom fitted for living room windows, complete set of 3</div>
+            </td>
+            <td class="mono price-original">€700 – €950+</td>
+            <td class="text-right mono price-bold">€200.00</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-room mono">Living</span></td>
+            <td>
+              <div class="item-title">2x 3-Bulb Living Room Ceiling Lights (€35 each)</div>
+              <div class="item-desc">Contemporary 3-bulb ceiling light fixtures for the living room, set of 2</div>
+            </td>
+            <td class="mono price-original">€140 – €200</td>
+            <td class="text-right mono price-bold">€70.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table 3: Appliances Placeholder -->
+    <div>
+      <div class="section-title bg-black border-thin mono">03 // Major Appliances (Berging / Laundry)</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 17%;">Room</th>
+            <th style="width: 53%;">Appliance &amp; Model</th>
+            <th style="width: 15%;">New / Retail</th>
+            <th style="width: 15%;" class="text-right">Takeover</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-room mono">Laundry</span></td>
+            <td>
+              <div class="item-title">Miele Washer + AEG Dryer (Combined Laundry Set)</div>
+              <div class="item-desc">Miele W 5973 WPS SoftCare (honeycomb drum, 8 kg, 1600 RPM) + AEG Lavatherm ProTex Condenser Dryer (2019, 7 kg, 2800 W). Excellent condition.</div>
+            </td>
+            <td class="mono">~€ 2,150.00</td>
+            <td class="text-right mono price-bold">€ 450.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Total Summary Banner -->
+    <div class="summary-box border-thick shadow-hard">
+      <div>
+        <div class="summary-title">TOTAAL TER OVERNAME / TOTAL TAKEOVER</div>
+        <div class="summary-subtitle mono">Full package with free PAX wardrobe (€1,256 invoice), Sonoff smart lighting, living lights &amp; laundry pair</div>
+      </div>
+      <div class="summary-amount mono shadow-hard-sm">
+        € 1,274.00
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer mono">
+      <div>Krooswijkhof 28, Amsterdam • NVM Lijst van Zaken Supplement</div>
+      <div>Complete takeover bundle including Miele washer &amp; AEG dryer</div>
+    </div>
+
+  </div>
+</body>
+</html>

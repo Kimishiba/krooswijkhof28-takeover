@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takeover Selector • Krooswijkhof 28 Amsterdam</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap');
+
+    :root {
+      --yellow: #FFE600;
+      --black: #000000;
+      --white: #FFFFFF;
+      --gray-bg: #F4F4F0;
+      --border-w: 3px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--gray-bg);
+      color: var(--black);
+      padding: 24px 16px 85px 16px;
+      line-height: 1.35;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Neo-Brutalist utility classes */
+    .border-thick {
+      border: var(--border-w) solid var(--black);
+    }
+
+    .border-thin {
+      border: 2px solid var(--black);
+    }
+
+    .shadow-hard {
+      box-shadow: 6px 6px 0px var(--black);
+    }
+
+    .shadow-hard-sm {
+      box-shadow: 3px 3px 0px var(--black);
+    }
+
+    .bg-yellow {
+      background-color: var(--yellow);
+    }
+
+    .bg-black {
+      background-color: var(--black);
+      color: var(--white);
+    }
+
+    .bg-white {
+      background-color: var(--white);
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .header-main {
+      flex: 1;
+      min-width: 280px;
+      padding: 16px 20px;
+      background-color: var(--yellow);
+    }
+
+    .header-badge {
+      padding: 16px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* Controls Bar */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      background: var(--white);
+    }
+
+    .btn-action {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      cursor: pointer;
+      border: 2px solid var(--black);
+      box-shadow: 3px 3px 0px var(--black);
+      transition: all 0.08s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--yellow);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--black);
+    }
+
+    .btn-action:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--black);
+    }
+
+    /* Section Headings */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 6px 12px;
+      display: inline-block;
+    }
+
+    /* Item Card */
+    .item-card {
+      background: var(--white);
+      margin-bottom: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    .item-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--black);
+    }
+
+    .item-card.selected {
+      background-color: #FFFDE6;
+      border-color: var(--black);
+    }
+
+    .item-card.permanent-free {
+      background-color: #F8FFF8;
+      border-color: #008822;
+    }
+
+    /* Custom Brutalist Checkbox */
+    .checkbox-container {
+      position: relative;
+      padding-top: 2px;
+    }
+
+    .custom-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2.5px solid var(--black);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--black);
+      transition: all 0.1s ease;
+    }
+
+    .item-card.selected .custom-checkbox {
+      background: var(--yellow);
+    }
+
+    .item-card.selected .custom-checkbox::after {
+      content: "✕";
+      color: var(--black);
+    }
+
+    /* Content Layout */
+    .item-body {
+      flex: 1;
+    }
+
+    .item-head-line {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .item-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .item-desc {
+      font-size: 11px;
+      color: #444444;
+      line-height: 1.35;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 1.5px 6px;
+      border: 1.5px solid var(--black);
+      background: var(--yellow);
+      margin-right: 4px;
+    }
+
+    .tag-room {
+      background: var(--white);
+    }
+
+    .tag-gift {
+      background: #008822;
+      color: #FFFFFF;
+      border-color: #008822;
+    }
+
+    /* Price tag */
+    .price-wrap {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .price-retail {
+      font-size: 10px;
+      color: #777777;
+      text-decoration: line-through;
+      margin-bottom: 1px;
+    }
+
+    .price-takeover {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .price-free {
+      color: #008822;
+      font-weight: 700;
+    }
+
+    /* Sticky Bottom Bar */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border-top: var(--border-w) solid var(--black);
+      padding: 12px 16px;
+      z-index: 100;
+      box-shadow: 0px -4px 0px rgba(0,0,0,0.1);
+    }
+
+    .sticky-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .summary-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .summary-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .summary-counter {
+      font-size: 12px;
+      font-weight: 700;
+      color: #333333;
+    }
+
+    .price-display {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .total-box {
+      background: var(--black);
+      color: var(--yellow);
+      padding: 8px 18px;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      border: 2px solid var(--black);
+      box-shadow: 3px 3px 0px var(--black);
+    }
+
+    .btn-export {
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 13px;
+      padding: 10px 18px;
+      border: 2.5px solid var(--black);
+      box-shadow: 4px 4px 0px var(--black);
+      cursor: pointer;
+      transition: all 0.08s ease;
+    }
+
+    .btn-export:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0px var(--black);
+      background: #FFF04D;
+    }
+
+    .btn-export:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--black);
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--white);
+      max-width: 620px;
+      width: 100%;
+      padding: 20px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    textarea.export-box {
+      width: 100%;
+      height: 240px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      padding: 10px;
+      border: 2px solid var(--black);
+      background: #F9F9F9;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        padding: 0;
+        background: white;
+      }
+      .sticky-bar, .controls-bar, .btn-action, .btn-export {
+        display: none !important;
+      }
+      .item-card {
+        box-shadow: none !important;
+        break-inside: avoid;
+        border-width: 1.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Header Section -->
+    <div class="header">
+      <div class="header-main border-thick shadow-hard">
+        <h1>Lijst van Zaken • Interactive Takeover</h1>
+        <div class="subtitle mono">Krooswijkhof 28, 1083 JB Amsterdam • Select items to calculate total</div>
+      </div>
+      <div class="header-badge bg-black border-thick shadow-hard">
+        <div class="mono" style="font-size: 8px; letter-spacing: 0.8px;">INTERACTIVE TAKEOVER FORM</div>
+        <div class="mono" style="font-size: 13px; font-weight: 700; color: var(--yellow);" id="header-selected-count">0 ITEMS SELECTED</div>
+      </div>
+    </div>
+
+    <!-- Quick controls -->
+    <div class="controls-bar border-thick shadow-hard-sm">
+      <div class="mono" style="font-size: 11px; font-weight: 700;">
+        💡 Ready-to-use smart lighting &amp; fitted custom furnishings for Krooswijkhof 28
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="btn-action" onclick="selectAll(true)">Select All</button>
+        <button class="btn-action" onclick="selectAll(false)">Clear</button>
+        <a href="takeover_list_a4.html" class="btn-action" style="text-decoration: none; display: inline-flex; align-items: center; background: #000; color: #fff;">📄 Printable A4</a>
+        <a href="takeover_list_krooswijkhof28.pdf" download class="btn-action" style="text-decoration: none; display: inline-flex; align-items: center; background: var(--yellow); color: #000;">📥 Download PDF</a>
+      </div>
+    </div>
+
+    <!-- SECTION 1: SMART LIGHTING -->
+    <div class="section-header">
+      <div class="section-title bg-black border-thin mono">01 // Smart Lighting System</div>
+    </div>
+
+    <!-- Sonoff System (Modules + Wall Switches Combined) -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-sonoff" onclick="toggleItem('sonoff')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-sonoff"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Whole Home</span> Sonoff RF Smart Lighting Package (6 Modules + 2 Wall Switches)</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: ~€135</div>
+            <div class="price-takeover">€90.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Complete lighting control package: 6x in-line RF receiver modules (Hallway [2], Kitchen, Kitchen Island, Dining Table &amp; TV) paired with 2x wireless stick-on wall switch panels (1x 3-gang, 1x 2-gang). Offered at 100% module cost price (€15 × 6 = €90.00) with wireless wall switches included.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SECTION 2: FURNITURE & FIXTURES -->
+    <div class="section-header">
+      <div class="section-title bg-black border-thin mono">02 // Furniture, Fitted Fixtures &amp; Window Coverings</div>
+    </div>
+
+    <!-- PAX Wardrobe (INCLUDED FOR FREE €0) -->
+    <div class="item-card border-thick shadow-hard-sm permanent-free" id="card-pax" onclick="toggleItem('pax')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-pax"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title">
+            <span class="tag tag-room mono">Main Bed</span> Custom IKEA PAX Wardrobe System (5-Door, 250×58×236 cm)
+            <span class="tag tag-gift mono">FREE INCLUDED</span>
+          </div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Invoice: €1,256.74</div>
+            <div class="price-takeover price-free">€0.00 FREE</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          White-stained oak frames, REINSVOLL grey-green doors, VIKEDAL mirror door, ÖSTERNÄS leather handles. Fully fitted with KOMPLEMENT pull-out trays, glass drawers, clothes rails, soft-close hinges, and integrated LINDSHULT LED cabinet lighting with TRÅDFRI wireless driver &amp; dimmer.
+        </div>
+      </div>
+    </div>
+
+    <!-- Bed Frame -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-bed" onclick="toggleItem('bed')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-bed"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title">
+            <span class="tag tag-room mono">Main Bed</span> IKEA KVITSÖY Bed Frame with Storage (160×200 cm)
+            <span class="tag tag-gift mono">FREE HEADREST</span>
+          </div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Invoice: €459.00</div>
+            <div class="price-takeover">€200.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Upholstered gas-strut lift-up storage bed with huge under-bed compartment in Bomstad white faux leather. Matching bed headrest included for free. Mattress is excluded/will be disposed of.
+        </div>
+      </div>
+    </div>
+
+    <!-- Fan Main Bed -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-fan-main" onclick="toggleItem('fan-main')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-fan-main"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Main Bed</span> Silver Ceiling Fan with Light and Remote</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: €180–€300</div>
+            <div class="price-takeover">€50.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Modern brushed silver / nickel ceiling fan with central dome light, multiple speed settings, and wireless remote control.
+        </div>
+      </div>
+    </div>
+
+    <!-- Rods Main Bed -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-rod-main" onclick="toggleItem('rod-main')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-rod-main"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Main Bed</span> IKEA RÄCKA / HUGAD Double Curtain Rod (Silver, 210–385 cm)</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">IKEA: €36.92</div>
+            <div class="price-takeover">€32.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Extendable double-layer curtain rod system complete with BETYDLIG wall/ceiling brackets, rod holders &amp; RAFFIG finials (retail minus €5).
+        </div>
+      </div>
+    </div>
+
+    <!-- Curtains Main Bed -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-curtains-main" onclick="toggleItem('curtains-main')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-curtains-main"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Main Bed</span> SANELA Velvet + SILVERLÖNN Sheer Vitrage (2 Pairs)</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Invoice: ~€90.00</div>
+            <div class="price-takeover">€50.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          1 pair SANELA dark blue room-darkening cotton velvet curtains (140×300 cm) + 1 pair SILVERLÖNN white sheer vitrage curtains (145×300 cm).
+        </div>
+      </div>
+    </div>
+
+    <!-- Fan Middle Room -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-fan-middle" onclick="toggleItem('fan-middle')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-fan-middle"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Middle Bed</span> 3-Blade Solid Wood Propeller Ceiling Fan with Light</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: €180–€280</div>
+            <div class="price-takeover">€50.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Contemporary carved natural wood blades, central LED dome light, whisper-quiet motor, and wireless remote control.
+        </div>
+      </div>
+    </div>
+
+    <!-- Jaloezie Middle Room -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-blind-middle" onclick="toggleItem('blind-middle')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-blind-middle"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Middle Bed</span> White Wooden Window Blind / Jaloezie</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: €100–€140</div>
+            <div class="price-takeover">€30.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Custom fitted horizontal white wooden slats matching window frame. Brackets and control cords included.
+        </div>
+      </div>
+    </div>
+
+    <!-- LED Panel Third Room -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-light-third" onclick="toggleItem('light-third')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-light-third"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Third Bed</span> Rectangular Wood-Trimmed LED Ceiling Light Panel</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: €45–€80</div>
+            <div class="price-takeover">€20.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Minimalist flush-mount wooden framed LED ambient ceiling lamp with clean, warm diffusion.
+        </div>
+      </div>
+    </div>
+
+    <!-- Rods Third Room -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-rod-third" onclick="toggleItem('rod-third')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-rod-third"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Third Bed</span> IKEA RÄCKA / HUGAD Double Curtain Rod (Silver)</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">IKEA: €36.92</div>
+            <div class="price-takeover">€32.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Extendable double curtain rod set with brackets, holders &amp; finials (retail minus €5).
+        </div>
+      </div>
+    </div>
+
+    <!-- Blinds Living Room -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-blinds-living" onclick="toggleItem('blinds-living')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-blinds-living"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Living Room</span> 3x Large White Wooden Blinds / Jaloezieën</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: €700–€950+</div>
+            <div class="price-takeover">€200.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Complete set of 3 matching 50 mm wide white wooden blinds fitted to the large living room windows. Includes mounting hardware.
+        </div>
+      </div>
+    </div>
+
+    <!-- 2x 3-Bulb Living Room Lights -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-living-lights" onclick="toggleItem('living-lights')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-living-lights"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title"><span class="tag tag-room mono">Living Room</span> 2x 3-Bulb Ceiling Light Fixtures (€35 each)</div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: ~€140–€200</div>
+            <div class="price-takeover">€70.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Pair of 3-bulb ceiling fixtures for the living room. Modern ambient illumination, €35.00 each for the set of two (€70.00 total).
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SECTION 3: MAJOR APPLIANCES -->
+    <div class="section-header">
+      <div class="section-title bg-black border-thin mono">03 // Major Appliances (Laundry Room / Berging)</div>
+    </div>
+
+    <!-- Combined Laundry Set -->
+    <div class="item-card border-thick shadow-hard-sm" id="card-laundry-set" onclick="toggleItem('laundry-set')">
+      <div class="checkbox-container">
+        <div class="custom-checkbox" id="check-laundry-set"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-head-line">
+          <div class="item-title">
+            <span class="tag tag-room mono">Laundry</span> Miele Washer + AEG Dryer (Combined Set)
+            <span class="tag mono" style="background:#000; color:#FFE600;">SET DEAL</span>
+          </div>
+          <div class="price-wrap mono">
+            <div class="price-retail">Retail: ~€2,150</div>
+            <div class="price-takeover">€450.00</div>
+          </div>
+        </div>
+        <div class="item-desc">
+          Complete high-end laundry bundle: <strong>Miele W 5973 WPS SoftCare</strong> (honeycomb drum, 8 kg, 1600 RPM, WPS flood protection) paired with <strong>AEG Lavatherm ProTex Condenser Dryer</strong> (T72276NAC, 2019, 7 kg capacity, 2800 W). Both in excellent condition and fully operational.
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End container -->
+
+
+  <!-- STICKY BOTTOM BAR -->
+  <div class="sticky-bar">
+    <div class="sticky-inner">
+      <div class="summary-text">
+        <div class="summary-label mono">Krooswijkhof 28 • Takeover Summary</div>
+        <div class="summary-counter mono" id="footer-counter">0 items selected</div>
+      </div>
+
+      <div class="price-display">
+        <div class="total-box mono" id="total-price-box">€ 0.00</div>
+        <button class="btn-export" onclick="openExportModal()">Review &amp; Share</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- EXPORT / REVIEW MODAL -->
+  <div class="modal-backdrop" id="exportModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-content border-thick shadow-hard">
+      <div class="modal-header">
+        <div style="font-weight: 700; font-size: 16px; text-transform: uppercase;">Selected Takeover Items</div>
+        <button class="btn-action" onclick="closeModal()">✕ Close</button>
+      </div>
+      <p style="font-size: 11px; margin-bottom: 10px;">Copy this summary to send directly to your makelaar or the buyer:</p>
+      <textarea class="export-box mono" id="exportText" readonly></textarea>
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn-action" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+        <button class="btn-action bg-yellow" onclick="window.print()">🖨️ Print as PDF</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Database of items (clean single Sonoff item)
+    const items = {
+      'sonoff': { name: 'Sonoff RF Smart Lighting Package (6 Modules + 2 Wall Switches)', price: 90.00, room: 'Whole Home', selected: false },
+      'pax': { name: 'Custom IKEA PAX Wardrobe System (5-Door, Fitted with Lighting)', price: 0.00, room: 'Main Bed', selected: true },
+      'bed': { name: 'IKEA KVITSÖY Bed Frame with Storage + Free Headrest (160×200 cm, no mattress)', price: 200.00, room: 'Main Bed', selected: false },
+      'fan-main': { name: 'Silver Ceiling Fan with Light and Remote', price: 50.00, room: 'Main Bed', selected: false },
+      'rod-main': { name: 'IKEA RÄCKA / HUGAD Double Curtain Rod (Silver)', price: 32.00, room: 'Main Bed', selected: false },
+      'curtains-main': { name: 'SANELA Velvet + SILVERLÖNN Sheer Vitrage (2 Pairs)', price: 50.00, room: 'Main Bed', selected: false },
+      'fan-middle': { name: '3-Blade Solid Wood Propeller Ceiling Fan with Light', price: 50.00, room: 'Middle Bed', selected: false },
+      'blind-middle': { name: 'White Wooden Window Blind / Jaloezie', price: 30.00, room: 'Middle Bed', selected: false },
+      'light-third': { name: 'Rectangular Wood-Trimmed LED Ceiling Light Panel', price: 20.00, room: 'Third Bed', selected: false },
+      'rod-third': { name: 'IKEA RÄCKA / HUGAD Double Curtain Rod (Silver)', price: 32.00, room: 'Third Bed', selected: false },
+      'blinds-living': { name: '3x Large White Wooden Blinds / Jaloezieën', price: 200.00, room: 'Living Room', selected: false },
+      'living-lights': { name: '2x 3-Bulb Living Room Ceiling Lights (€35 each)', price: 70.00, room: 'Living Room', selected: false },
+      'laundry-set': { name: 'Miele Washer + AEG Dryer (Combined Laundry Bundle, Dryer 2019)', price: 450.00, room: 'Laundry', selected: false }
+    };
+
+    function toggleItem(id) {
+      items[id].selected = !items[id].selected;
+      updateUI();
+    }
+
+    function selectAll(val) {
+      for (const id in items) {
+        items[id].selected = val;
+      }
+      updateUI();
+    }
+
+    function updateUI() {
+      let total = 0;
+      let count = 0;
+
+      for (const id in items) {
+        const item = items[id];
+        const card = document.getElementById('card-' + id);
+        
+        if (item.selected) {
+          card.classList.add('selected');
+          count++;
+          total += item.price;
+        } else {
+          card.classList.remove('selected');
+        }
+      }
+
+      // Update counters & total box
+      document.getElementById('header-selected-count').innerText = count + ' ITEMS SELECTED';
+      document.getElementById('footer-counter').innerText = count + ' of ' + Object.keys(items).length + ' items selected';
+      document.getElementById('total-price-box').innerText = '€ ' + total.toFixed(2);
+    }
+
+    function generateSummaryText() {
+      let text = "TAKEOVER LIST / LIJST VAN ZAKEN (TER OVERNAME)\n";
+      text += "Property: Krooswijkhof 28, 1083 JB Amsterdam\n";
+      text += "Date: " + new Date().toLocaleDateString('nl-NL') + "\n";
+      text += "--------------------------------------------------------\n\n";
+
+      let total = 0;
+      let selectedItems = [];
+
+      for (const id in items) {
+        const item = items[id];
+        if (item.selected) {
+          let note = "";
+          if (id === 'pax') {
+            note = " [INCLUDED FOR FREE €0.00 - INVOICE €1,256.74]";
+          }
+
+          total += item.price;
+          selectedItems.push(`[X] [${item.room}] ${item.name} — €${item.price.toFixed(2)}${note}`);
+        }
+      }
+
+      if (selectedItems.length === 0) {
+        text += "No items currently selected.\n\n";
+      } else {
+        text += selectedItems.join("\n") + "\n\n";
+      }
+
+      text += "--------------------------------------------------------\n";
+      text += `TOTAL TAKEOVER AMOUNT: € ${total.toFixed(2)}\n`;
+
+      return text;
+    }
+
+    function openExportModal() {
+      document.getElementById('exportText').value = generateSummaryText();
+      document.getElementById('exportModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('exportModal').style.display = 'none';
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'exportModal') {
+        closeModal();
+      }
+    }
+
+    function copyToClipboard() {
+      const textarea = document.getElementById('exportText');
+      textarea.select();
+      document.execCommand('copy');
+      alert("Takeover summary copied to clipboard!");
+    }
+
+    // Default: select all so buyers start with full bundle
+    selectAll(true);
+  </script>
+</body>
+</html>
